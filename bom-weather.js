@@ -41,7 +41,7 @@ const influx = new Influx.InfluxDB({
 });
 
 // Schedule to run every 30 minutes
-var scheduledBOM = schedule.scheduleJob('*/30 * * * *', () => {
+//var scheduledJob = schedule.scheduleJob('*/30 * * * *', () => {
 
   // Log BOM weather data to InfluxDB
   got('http://reg.bom.gov.au/fwo/IDN60901/IDN60901.94767.json', { json: true }).then(response => {
@@ -70,32 +70,6 @@ var scheduledBOM = schedule.scheduleJob('*/30 * * * *', () => {
   .catch(error => {
     console.log(error.response.body);
   });
-});
 
-// Schedule to run every 30 minutes
-var scheduledHAT = schedule.scheduleJob('*/30 * * * *', () => {
 
-  // Log Sense HAT weather data to InfluxDB
-  cmd.get('/usr/bin/python python/get-weather.py', (err, data, stderr) => {
-    if(err) {
-      console.log(err);
-    } else {
-      var weather = data.split('\n');
-      influx.writePoints([
-        {
-            measurement: 'sense_hat_environmental',
-            fields: {
-              temp: weather[0],
-              humidity: weather[1],
-              pressure: weather[2]
-            },
-            tags: { host: 'localhost', app: 'pi-weather' }
-        }
-      ])
-      .catch(err => {
-        console.error(`Error writing points: ${err}`);
-      });
-    }
-  });
-
-});
+//});

@@ -41,39 +41,8 @@ const influx = new Influx.InfluxDB({
 });
 
 // Schedule to run every 30 minutes
-var scheduledBOM = schedule.scheduleJob('*/30 * * * *', () => {
+//var scheduledJob = schedule.scheduleJob('*/30 * * * *', () => {
 
-  // Log BOM weather data to InfluxDB
-  got('http://reg.bom.gov.au/fwo/IDN60901/IDN60901.94767.json', { json: true }).then(response => {
-    influx.writePoints([
-      {
-        measurement: 'bom_syd_airport',
-        fields: {
-          apparent_t: response.body.observations.data[0].apparent_t,
-          cloud: response.body.observations.data[0].cloud,
-          cloud_type: response.body.observations.data[0].cloud_type,
-          gust_kmh: response.body.observations.data[0].gust_kmh,
-          air_temp: response.body.observations.data[0].air_temp,
-          dewpt: response.body.observations.data[0].dewpt,
-          press: response.body.observations.data[0].press,
-          rel_hum: response.body.observations.data[0].rel_hum,
-          wind_dir: response.body.observations.data[0].wind_dir,
-          wind_spd_kmh: response.body.observations.data[0].wind_spd_kmh
-        },
-        tags: { host: 'localhost', app: 'pi-weather' }
-      }
-    ])
-    .catch(err => {
-      console.error(`Error writing points: ${err}`);
-    })
-  })
-  .catch(error => {
-    console.log(error.response.body);
-  });
-});
-
-// Schedule to run every 30 minutes
-var scheduledHAT = schedule.scheduleJob('*/30 * * * *', () => {
 
   // Log Sense HAT weather data to InfluxDB
   cmd.get('/usr/bin/python python/get-weather.py', (err, data, stderr) => {
@@ -98,4 +67,4 @@ var scheduledHAT = schedule.scheduleJob('*/30 * * * *', () => {
     }
   });
 
-});
+//});
