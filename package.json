@@ -1,0 +1,24 @@
+{
+  "name": "pi-weather",
+  "version": "1.0.0",
+  "description": "Pi Weather Logging Station",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jimdavis66/pi-weather.git"
+  },
+  "author": "James Davis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jimdavis66/pi-weather/issues"
+  },
+  "homepage": "https://github.com/jimdavis66/pi-weather#readme",
+  "dependencies": {
+    "influx": "^5.0.0-alpha.4",
+    "node-cmd": "^3.0.0",
+    "node-schedule": "^1.3.0"
+  }
+}
